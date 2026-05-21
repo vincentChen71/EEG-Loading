@@ -3,7 +3,14 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 from brainflow.data_filter import AggOperations, DataFilter
 
-loadedData = np.load("./model_data/data/left/1572814991.npy")
+# Loading data where user was thinking of moving a cursor left
+# loadedData = np.load("./model_data/data/left/1572814991.npy")
+
+# Loading data where user was not thinking of moving the cursor
+# loadedData = np.load("./model_data/data/none/1572815767.npy")
+
+# Loading data where user was thinking of moving a cursor right
+loadedData = np.load("./model_data/data/right/1572815379.npy")
 
 NUM_CHANNELS = np.shape(loadedData)[1]
 NUM_TIMESTEPS = np.shape(loadedData)[0]
@@ -26,7 +33,7 @@ plt.title("Raw Data")
 slider_color = 'White'
 
 axis_position = plt.axes([0.2,0,0.65,0.03], facecolor = slider_color)
-slider_position = Slider(axis_position, 'Time', 0, NUM_TIMESTEPS, valinit=0, valstep=range(250))
+slider_position = Slider(axis_position, 'Time', 0, NUM_TIMESTEPS, valinit=0, valstep=range(NUM_TIMESTEPS))
 
 def update(val):
     pos = slider_position.val
@@ -60,7 +67,7 @@ plt.title("Denoised Data")
 slider_color = 'white'
 
 axis_position = plt.axes([0.2,0,0.65,0.03], facecolor = slider_color)
-slider_position2 = Slider(axis_position, 'Time', 0, NUM_TIMESTEPS, valinit=0, valstep=range(250))
+slider_position2 = Slider(axis_position, 'Time', 0, NUM_TIMESTEPS, valinit=0, valstep=range(NUM_TIMESTEPS))
 
 def updateDenoised(val):
     pos = slider_position2.val
