@@ -1,6 +1,9 @@
 import os
 import sys
 import numpy as np
+import tensorflow as tf
+import keras
+from keras import layers
 
 CLASSES = ["left","right","none"]
 
@@ -55,3 +58,28 @@ valid_Y = []
 for x,y in valid_data:
     valid_X.append(x)
     valid_Y.append(y)
+
+# Convert to numpy arrays
+train_X = np.array(train_X)
+valid_X = np.array(valid_X)
+
+train_Y = np.array(train_Y)
+valid_Y = np.array(valid_Y)
+
+print(np.shape(train_X))
+
+model = keras.Sequential()
+model.add(layers.GRU(128))
+model.add(layers.Dense(3))
+model.add(layers.Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
+
+epochs = 10
+batch_size = 32
+for epoch in range(epochs):
+    model.fit(train_X, train_Y, batch_size=batch_size, epochs=1, validation_data=(valid_X, valid_Y))
+    score = model.evaluate(valid_X, valid_Y, batch_size=batch_size)
+    print(score)
