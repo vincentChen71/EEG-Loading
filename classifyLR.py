@@ -5,7 +5,7 @@ import tensorflow as tf
 import keras
 from keras import layers
 
-CLASSES = ["left","right","none"]
+CLASSES = ["left","none","right"]
 
 train_data = []
 valid_data = []
@@ -15,7 +15,7 @@ valid_counts = [0,0,0]
 
 for idx, c in enumerate(CLASSES):
     train_dir = os.path.join("model_data/data", c)
-    onehot = np.zeros((3,1))
+    onehot = np.zeros((3))
     onehot[idx] = 1
     runningTrainCount = 0
     for i in os.listdir(train_dir):
