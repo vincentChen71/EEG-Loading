@@ -69,7 +69,7 @@ valid_Y = np.array(valid_Y)
 print(np.shape(train_X))
 
 model = keras.Sequential()
-model.add(layers.GRU(128))
+model.add(layers.GRU(32))
 model.add(layers.Dense(3))
 model.add(layers.Activation('softmax'))
 
