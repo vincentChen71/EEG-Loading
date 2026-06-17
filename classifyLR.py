@@ -69,9 +69,9 @@ valid_Y = np.array(valid_Y)
 print(np.shape(train_X))
 
 model = keras.Sequential()
-model.add(layers.GRU(32))
-model.add(layers.Dense(3))
-model.add(layers.Activation('softmax'))
+model.add(layers.GRU(32)) # encoding into 32-dim features
+model.add(layers.Dense(3)) # output layer
+model.add(layers.Activation('softmax')) # softmax output layer
 
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
