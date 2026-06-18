@@ -69,9 +69,18 @@ valid_Y = np.array(valid_Y)
 print(np.shape(train_X))
 
 model = keras.Sequential()
-model.add(layers.GRU(32)) # encoding into 32-dim features
+model.add(layers.Conv1D(32,(3), input_shape=train_X.shape[1:])) # Encoding with conv1d instead
+# model.add(layers.GRU(32)) # encoding into 32-dim features
+model.add(layers.Activation('relu')) # relu activation layer
+
+model.add(layers.Flatten()) # flattening layer
+
+model.add(layers.Dense(64)) # NN hidden layer
+model.add(layers.Activation('relu')) # relu activation layer
+model.add(layers.Dense(32)) # NN hidden layer
+model.add(layers.Activation('relu')) # relu activation layer
 model.add(layers.Dense(3)) # output layer
-model.add(layers.Activation('softmax')) # softmax output layer
+model.add(layers.Activation('softmax')) # softmax activation layer
 
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
