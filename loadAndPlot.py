@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
@@ -87,12 +88,17 @@ slider_position2.on_changed(updateDenoised)
 # Since the data has already been FFT'd, need to format into tuple for get_band_power()
 # get_psd() returns a tuple with amplitude and frequency arrays
 # The data is FFT 0-60Hz
+# Also check how long this band power thing takes. Maybe will be fast enough for real time analysis??
+# band power calculation takes around 0.05 seconds. 20 calculations per second hmm.
+startTime = time.time()
 bpData = np.zeros([NUM_TIMESTEPS,NUM_CHANNELS])
 for i in range(NUM_CHANNELS):
     for t in range(NUM_TIMESTEPS):
         inTuple = (denoisedData[t,i,:],np.array(range(NUM_FREQS),np.float64))
         bp = DataFilter.get_band_power(inTuple,0,NUM_FREQS)
         bpData[t,i] = bp
+endTime = time.time()
+print("Band Power Calculation Time:",endTime-startTime)
 
 plt.figure()
 endpoint = NUM_TIMESTEPS/25
